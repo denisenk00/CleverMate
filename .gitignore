@@ -1,0 +1,12 @@
+/.idea/
+/config-service/.mvn/
+/config-service/target/
+/config-service/config-service.iml
+/discovery-service/.mvn/
+/discovery-service/target/
+/discovery-service/discovery-service.iml
+/telegram-service/.mvn/
+/telegram-service/target/
+/telegram-service/telegram-service.iml
+/TelegramOpenAPIProject_Microservices.iml
+/test-http.http
