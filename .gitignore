@@ -10,3 +10,5 @@
 /telegram-service/telegram-service.iml
 /TelegramOpenAPIProject_Microservices.iml
 /test-http.http
+/botuser-service/.mvn/
+/botuser-service/botuser-service.iml
