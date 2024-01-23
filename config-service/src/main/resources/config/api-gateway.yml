@@ -7,9 +7,23 @@ eureka:
   instance:
     prefer-ip-address: true
 spring:
+  application:
+    main:
+      allow-bean-definition-overriding: true
+      web-application-type: reactive
   cloud:
     gateway:
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
+auth0:
+  application:
+    domain: dev-xxx
+    client-id: 3nipxxx
+    client-secret: NI0Kxxx
+  client-api:
+    audience: telegram-openapi-api
+    issuer-signing-key: GQjWxxx
+  users:
+    admin-role-id: rol_xxx
