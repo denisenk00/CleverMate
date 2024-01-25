@@ -1,7 +1,8 @@
 package com.denysenko.telegramservice.telegram.handlers;
 
+import com.denysenko.telegramservice.clients.BotUserClient;
+import com.denysenko.telegramservice.dtos.BotUserDTO;
 import com.denysenko.telegramservice.dtos.RequestDTO;
-import com.denysenko.telegramservice.exceptions.UnhandledUpdateException;
 import com.denysenko.telegramservice.rabbitmq.producers.RequestProducer;
 import com.denysenko.telegramservice.telegram.TelegramAPIService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class TextHandler extends Handler{
 
     private static final String START_COMMAND = "/start";
     private static final String START_MESSAGE = "Hi! Glad to see yoo here. I'm waiting for your first request)";
-    //private final BotUserClient botUserClient;
+    private final BotUserClient botUserClient;
     private final TelegramAPIService telegramAPIService;
     private final RequestProducer requestProducer;
 
@@ -35,7 +36,7 @@ public class TextHandler extends Handler{
         if(text.equals(START_COMMAND)){
             telegramAPIService.sendMessage(chatId, START_MESSAGE);
             String username = message.getFrom().getUserName();
-            //botUserClient.putBotUser(new BotUserDTO(chatId, username, true));
+            botUserClient.putBotUser(new BotUserDTO(chatId, username, true));
         }else {
             requestProducer.sendRequest(new RequestDTO(chatId, text, LocalDateTime.now()));
         }
