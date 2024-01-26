@@ -16,9 +16,9 @@ public class BotUserController {
     @Autowired
     private BotUserService botUserService;
 
-    @PutMapping("/{chatId}/status")
-    public void patchBotUserStatusByChatId(@PathVariable Long chatId, @RequestBody boolean isActive){
-        botUserService.changeProfileStatus(chatId, isActive);
+    @PutMapping("/{id}/status")
+    public void patchBotUserStatusByChatId(@PathVariable Long id, @RequestBody boolean isActive){
+        botUserService.changeProfileStatusById(id, isActive);
     }
 
     @PutMapping

@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("botusers")
 public class BotUser {
     @Id
-    private Long chatId;
+    private Long id;
     private String name;
     private boolean active;
 }

@@ -25,11 +25,11 @@ public class BotUserServiceImpl implements BotUserService{
     private final BotUserMapper mapper;
 
     @Override
-    public void changeProfileStatus(Long chatId, boolean isActive) {
-        var query = new Query(Criteria.where("chatId").is(chatId));
+    public void changeProfileStatusById(Long id, boolean isActive) {
+        var query = new Query(Criteria.where("id").is(id));
         var res = mongoOperations.updateFirst(query, Update.update("active", isActive), BotUser.class);
         if(res.getModifiedCount() < 1)
-            throw new DocumentNotFoundException("Bot user with chatId = " + chatId + " doesn't exist");
+            throw new DocumentNotFoundException("Bot user with id = " + id + " doesn't exist");
     }
 
     @Override

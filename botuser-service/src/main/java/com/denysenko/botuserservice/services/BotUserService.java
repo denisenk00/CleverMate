@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 public interface BotUserService {
-    void changeProfileStatus(@NotNull Long chatId, boolean isActive);
+    void changeProfileStatusById(@NotNull Long id, boolean isActive);
 
     BotUserDTO saveOrUpdate(BotUserDTO botUser);
 
