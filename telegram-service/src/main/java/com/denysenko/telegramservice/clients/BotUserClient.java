@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @Bulkhead(name = "botuser-service")
 public interface BotUserClient {
 
-    @PutMapping("/botusers/{chatId}/status")
-    void patchBotUserStatusById(@PathVariable Long chatId, @RequestBody boolean isActive);
+    @PutMapping("/botusers/{id}/status")
+    void patchBotUserStatusById(@PathVariable Long id, @RequestBody boolean isActive);
 
     @PutMapping("/botusers")
     BotUserDTO  putBotUser(@RequestBody BotUserDTO botUserDTO);
