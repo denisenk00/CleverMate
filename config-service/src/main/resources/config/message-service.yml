@@ -1,0 +1,16 @@
+server:
+  port: 8083
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+spring:
+  data:
+    mongodb:
+      host: #localhost
+      port: #27017
+      database: messages
+      username:
+      password:

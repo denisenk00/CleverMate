@@ -14,3 +14,6 @@
 /botuser-service/botuser-service.iml
 /api-gateway/.mvn/
 /api-gateway/api-gateway.iml
+/message-service/.mvn/
+/message-service/message-service.iml
+/message-service/target/
