@@ -12,7 +12,7 @@ public class ResponseConsumer {
 
     @RabbitListener(queues = "responses")
     public void processResponse(ResponseDTO response){
-        telegramAPIService.sendMessage(response.chatId(), response.text());
+        telegramAPIService.sendMessage(response.botUserId(), response.text());
     }
 
 }
