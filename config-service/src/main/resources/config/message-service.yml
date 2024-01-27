@@ -14,3 +14,8 @@ spring:
       database: messages
       username:
       password:
+  rabbitmq:
+    host: #localhost
+    port: #5672
+    username:
+    password:
