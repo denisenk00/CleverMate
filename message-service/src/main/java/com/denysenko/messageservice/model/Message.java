@@ -11,7 +11,7 @@ import java.util.Optional;
 @NoArgsConstructor
 @Document("messages")
 public class Message {
-    private Long id;
+    private String id;
     private Long botUserId;
     private String text;
     private LocalDateTime time;
@@ -22,7 +22,7 @@ public class Message {
         return Optional.ofNullable(adminUsername);
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -34,7 +34,7 @@ public class Message {
         this.time = time;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
