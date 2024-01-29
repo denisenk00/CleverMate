@@ -10,5 +10,8 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username:
+    username: guest
     password:
+openai:
+  key:
+  timeout: 10000
