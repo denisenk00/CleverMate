@@ -38,7 +38,7 @@ public class TextHandler extends Handler{
             String username = message.getFrom().getUserName();
             botUserClient.putBotUser(new BotUserDTO(chatId, username, true));
         }else {
-            requestProducer.sendRequest(new RequestDTO(chatId, text, LocalDateTime.now()));
+            requestProducer.sendRequest(new RequestDTO(chatId, text));
         }
 
     }
