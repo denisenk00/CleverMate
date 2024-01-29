@@ -17,3 +17,6 @@
 /message-service/.mvn/
 /message-service/message-service.iml
 /message-service/target/
+/request-processor-service/.mvn/
+/message-processor/.mvn/
+/message-processor/message-processor.iml
