@@ -6,6 +6,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient("message-service")
 @CircuitBreaker(name = "message-service")
@@ -14,5 +15,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface MessageClient {
 
     @PostMapping("/private/messages")
-    void saveMessage(MessageDTO messageDTO);
+    void saveMessage(@RequestBody MessageDTO messageDTO);
 }

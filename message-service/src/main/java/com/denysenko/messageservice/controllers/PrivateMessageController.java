@@ -15,7 +15,7 @@ public class PrivateMessageController {
     private final MessageService messageService;
 
     @PostMapping
-    public Message saveMessage(@Valid NewMessageDTO message){
+    public Message saveMessage(@Valid @RequestBody NewMessageDTO message){
         return messageService.save(message);
     }
 
