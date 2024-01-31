@@ -8,9 +8,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @FeignClient("message-service")
-@CircuitBreaker(name = "botuser-service")
-@Retry(name = "botuser-service")
-@Bulkhead(name = "botuser-service")
+@CircuitBreaker(name = "message-service")
+@Retry(name = "message-service")
+@Bulkhead(name = "message-service")
 public interface MessageClient {
 
     @PostMapping("/private/messages")
