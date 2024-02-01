@@ -4,7 +4,6 @@ import com.denysenko.telegramservice.dtos.BotUserDTO;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
-import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @Bulkhead(name = "botuser-service")
 public interface BotUserClient {
 
-    @PutMapping("/botusers/{id}/status")
+    @PutMapping("/private/botusers/{id}/status")
     void patchBotUserStatusById(@PathVariable Long id, @RequestBody boolean isActive);
 
-    @PutMapping("/botusers")
+    @PutMapping("/private/botusers")
     BotUserDTO  putBotUser(@RequestBody BotUserDTO botUserDTO);
 }
