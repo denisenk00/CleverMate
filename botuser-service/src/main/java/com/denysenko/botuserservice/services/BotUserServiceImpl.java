@@ -39,7 +39,6 @@ public class BotUserServiceImpl implements BotUserService{
         return mapper.entityToDTO(saved);
     }
 
-    // todo: TEST method
     @Override
     public Page<BotUserDTO> getPageOfBotUsers(int pageNumber, int pageSize) {
         if(pageNumber < 1 || pageSize < 1)
@@ -47,8 +46,7 @@ public class BotUserServiceImpl implements BotUserService{
 
         var pageable = PageRequest.of(pageNumber - 1, pageSize - 1);
         var query = new Query().with(pageable);
-        //mongoOperations.count(query.skip(-1).limit(-1), YourObjectType.class)
-        var botUserList = List.of(new BotUser());//mongoOperations.find(query, BotUser.class);
+        var botUserList = mongoOperations.find(query, BotUser.class);
         return new PageImpl(mapper.entitiesToDTOs(botUserList), pageable, botUserList.size());
     }
 }
