@@ -5,9 +5,9 @@ import com.denysenko.messageservice.model.Message;
 import com.denysenko.messageservice.services.MessageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang.NotImplementedException;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,12 +36,11 @@ public class PublicMessageController {
         return messageService.getPageOfMessages(botUserId, pageNumber, pageSize);
     }
 
-    //todo: implement assigning admin info
     @PostMapping
     @PreAuthorize("hasAuthority('create:messages')")
+    //NOTE!!! username is parsed from JWT is identifier of Auth0 user like 'Auth0|fsdkfjdjfsjfdskf'
     Message postAdminMessage(@RequestBody @Valid AdminMessageDTO adminMessageDTO){
-        throw new NotImplementedException();
-        //@AuthenticationPrincipal AuthenticatedUser authenticatedUser){
-        //return messageService.sendToTGAndSave(adminMessageDTO, null);
+        var username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return messageService.sendToTGAndSave(adminMessageDTO, username);
     }
 }
