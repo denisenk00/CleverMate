@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.NotImplementedException;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class PublicMessageController {
     private final MessageService messageService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('read:messages')")
     List<Message> getLastNMessagesByBotUserId(
             @RequestParam(name = "userId") long botUserId,
             @RequestParam(name = "amount", defaultValue = "10", required = false) int amount){
@@ -26,6 +28,7 @@ public class PublicMessageController {
     }
 
     @GetMapping("/page")
+    @PreAuthorize("hasAuthority('read:messages')")
     Page<Message> getPageOfMessages(
             @RequestParam(name = "userId") long botUserId,
             @RequestParam(name = "page", defaultValue = "1", required = false) int pageNumber,
@@ -35,6 +38,7 @@ public class PublicMessageController {
 
     //todo: implement assigning admin info
     @PostMapping
+    @PreAuthorize("hasAuthority('create:messages')")
     Message postAdminMessage(@RequestBody @Valid AdminMessageDTO adminMessageDTO){
         throw new NotImplementedException();
         //@AuthenticationPrincipal AuthenticatedUser authenticatedUser){

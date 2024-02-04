@@ -15,7 +15,11 @@ spring:
       username:
       password:
   rabbitmq:
-    host: #localhost
-    port: #5672
+    host: localhost
+    port: 5672
     username:
     password:
+auth0:
+  issuer: #https://dev-t1tm1qtjpt05vucu.eu.auth0.com/
+  audience: #telegram-openapi-api
+  issuer-signing-key:
