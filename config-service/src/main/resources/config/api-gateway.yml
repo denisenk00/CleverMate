@@ -13,6 +13,19 @@ spring:
       web-application-type: reactive
   cloud:
     gateway:
+      routes:
+        - id: messagesRoute
+          uri: lb://message-service/messages
+          predicates:
+            - Path=/messages/**
+          filters:
+            - RemoveRequestHeader=Cookie
+        - id: botUsersRoute
+          uri: lb://botuser-service/botusers
+          predicates:
+            - Path=/botusers/**
+          filters:
+            - RemoveRequestHeader=Cookie
       discovery:
         locator:
           enabled: true
