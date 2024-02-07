@@ -32,7 +32,6 @@ public class JwtUtils {
     private static List<? extends GrantedAuthority> resolveUserPermissions(DecodedJWT accessToken){
         Objects.requireNonNull(accessToken);
         var authoritiesClaim = accessToken.getClaim(AUTHORITIES_KEY);
-        System.out.println(Arrays.toString(authoritiesClaim.asArray(String.class)));
         return authoritiesClaim == null
                 ? AuthorityUtils.NO_AUTHORITIES
                 : authoritiesClaim.asList(SimpleGrantedAuthority.class);
