@@ -1,4 +1,4 @@
-package com.denysenko.apigateway;
+package com.denysenko.apigateway.security.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

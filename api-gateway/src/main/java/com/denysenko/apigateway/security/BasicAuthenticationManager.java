@@ -2,7 +2,7 @@ package com.denysenko.apigateway.security;
 
 import com.auth0.jwt.JWT;
 import com.denysenko.apigateway.security.auth0.Auth0Service;
-import com.denysenko.apigateway.CredentialsDTO;
+import com.denysenko.apigateway.security.dtos.CredentialsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

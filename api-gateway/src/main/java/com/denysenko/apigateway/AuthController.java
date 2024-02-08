@@ -1,6 +1,7 @@
 package com.denysenko.apigateway;
 
 import com.denysenko.apigateway.security.auth0.Auth0Service;
+import com.denysenko.apigateway.security.dtos.CredentialsDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
