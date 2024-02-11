@@ -2,7 +2,6 @@ package com.denysenko.botuserservice;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.denysenko.botuserservice.exceptions.DocumentNotFoundException;
-import com.denysenko.botuserservice.exceptions.JwtNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,7 +16,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(documentNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({JwtNotFoundException.class, JWTVerificationException.class})
+    @ExceptionHandler({JWTVerificationException.class})
     public ResponseEntity handleUnauthorized(Exception e){
         return new ResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }

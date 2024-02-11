@@ -1,7 +1,6 @@
 package com.denysenko.messageservice;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.denysenko.messageservice.exceptions.JwtNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,7 +15,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler({JwtNotFoundException.class, JWTVerificationException.class})
+    @ExceptionHandler({JWTVerificationException.class})
     public ResponseEntity handleAuthorizationException(RuntimeException ex){
         return new ResponseEntity(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
