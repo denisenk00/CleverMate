@@ -3,9 +3,9 @@ package com.denysenko.messageprocessor.rabbitmq;
 import com.denysenko.messageprocessor.dtos.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class ResponseProducer {
 
