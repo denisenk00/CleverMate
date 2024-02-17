@@ -1,0 +1,200 @@
+version: '3.8'
+services:
+  config-service:
+    image: config-service
+    container_name: config-service
+    ports:
+    - 8888:8888
+    environment:
+      - DISCOVERY_SERVICE_URI=${DISCOVERY_SERVICE_URI}
+    volumes:
+      - ./config-service/src/main/resources/config:/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:8888/actuator/health || exit 1
+      interval: 2s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+  discovery-service:
+    image: discovery-service
+    container_name: discovery-service
+    ports:
+    - 8761:8761
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:8761/actuator/health || exit 1
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+  api-gateway:
+    image: api-gateway
+    container_name: api-gateway
+    ports:
+    - 8090:8090
+    environment:
+      - AUTH0_APP_DOMAIN=${AUTH0_APP_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
+      - AUTH0_ISSUER=${AUTH0_ISSUER}
+      - AUTH0_SIGNING_KEY=${AUTH0_SIGNING_KEY}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+      - AUTH0_ADMIN_ROLE_ID=${AUTH0_ADMIN_ROLE_ID}
+      - CONFIG_SERVICE_URI=${CONFIG_SERVICE_URI}
+      - DISCOVERY_SERVICE_URI=${DISCOVERY_SERVICE_URI}
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+
+  telegram-service:
+    image: telegram-service
+    container_name: telegram-service
+    ports:
+    - 8081:8081
+    environment:
+      - TELEGRAM_BOT_USERNAME=${TELEGRAM_BOT_USERNAME}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_USERNAME=${RABBIT_USERNAME}
+      - RABBIT_PASSWORD=${RABBIT_PASSWORD}
+      - CONFIG_SERVICE_URI=${CONFIG_SERVICE_URI}
+      - DISCOVERY_SERVICE_URI=${DISCOVERY_SERVICE_URI}
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  message-processor:
+    image:  message-processor
+    container_name:  message-processor
+    ports:
+    - 8084:8084
+    environment:
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_USERNAME=${RABBIT_USERNAME}
+      - RABBIT_PASSWORD=${RABBIT_PASSWORD}
+      - OPENAI_KEY=${OPENAI_KEY}
+      - CONFIG_SERVICE_URI=${CONFIG_SERVICE_URI}
+      - DISCOVERY_SERVICE_URI=${DISCOVERY_SERVICE_URI}
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  message-service:
+    image: message-service
+    container_name: message-service
+    ports:
+    - 8083:8083
+    environment:
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_USERNAME=${RABBIT_USERNAME}
+      - RABBIT_PASSWORD=${RABBIT_PASSWORD}
+      - DB_HOST=${MESSAGE_DB_HOST}
+      - DB_PORT=27017
+      - DB_USER=${MESSAGE_DB_USER}
+      - DB_PASSWORD=${MESSAGE_DB_PASSWORD}
+      - AUTH0_ISSUER=${AUTH0_ISSUER}
+      - AUTH0_SIGNING_KEY=${AUTH0_SIGNING_KEY}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+      - CONFIG_SERVICE_URI=${CONFIG_SERVICE_URI}
+      - DISCOVERY_SERVICE_URI=${DISCOVERY_SERVICE_URI}
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      message-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  message-db:
+    image: mongo:latest
+    container_name: message-db
+    ports:
+      - ${MESSAGE_DB_HOST_PORT}:27017
+    environment:
+      - MONGO_INITDB_DATABASE=message-db
+      - MONGO_INITDB_ROOT_USERNAME=${MESSAGE_DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MESSAGE_DB_PASSWORD}
+      - DB_NAME=message-db
+      - DB_USER=${MESSAGE_DB_USER}
+      - DB_PASSWORD=${MESSAGE_DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mongosh", "-u", "$DB_USER", "-p", "$DB_PASSWORD", "--authenticationDatabase", "$DB_NAME", "--eval", 'db.adminCommand({ ping: 1 })']
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  botuser-service:
+    image: botuser-service
+    container_name: botuser-service
+    ports:
+    - 8082:8082
+    environment:
+      - DB_HOST=${BOTUSER_DB_HOST}
+      - DB_PORT=27017
+      - DB_USER=${BOTUSER_DB_USER}
+      - DB_PASSWORD=${BOTUSER_DB_PASSWORD}
+      - AUTH0_ISSUER=${AUTH0_ISSUER}
+      - AUTH0_SIGNING_KEY=${AUTH0_SIGNING_KEY}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+      - CONFIG_SERVICE_URI=${CONFIG_SERVICE_URI}
+      - DISCOVERY_SERVICE_URI=${DISCOVERY_SERVICE_URI}
+    depends_on:
+      config-service:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      botuser-db:
+        condition: service_healthy
+
+  botuser-db:
+    image: mongo:latest
+    container_name: botuser-db
+    ports:
+    - ${BOTUSER_DB_HOST_PORT}:27017
+    environment:
+      - MONGO_INITDB_DATABASE=botuser-db
+      - MONGO_INITDB_ROOT_USERNAME=${BOTUSER_DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${BOTUSER_DB_PASSWORD}
+      - DB_NAME=botuser-db
+      - DB_USER=${BOTUSER_DB_USER}
+      - DB_PASSWORD=${BOTUSER_DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mongosh", "-u", "$DB_USER", "-p", "$DB_PASSWORD", "--authenticationDatabase", "$DB_NAME", "--eval", 'db.adminCommand({ ping: 1 })']
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  rabbitmq:
+    image: rabbitmq:3.10.7-management-alpine
+    container_name: rabbitmq
+    ports:
+    - 15672:15672
+    - 5672:5672
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBIT_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBIT_PASSWORD}
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      start_period: 10s
+      interval: 5s
+      timeout: 30s
+      retries: 3
+
+
