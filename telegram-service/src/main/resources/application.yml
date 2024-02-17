@@ -1,5 +1,18 @@
 spring:
   application:
     name: telegram-service
-server:
-  port: 8081
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    port: ${RABBIT_PORT}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+telegram:
+  bot:
+    username: ${TELEGRAM_BOT_USERNAME}
+    token: ${TELEGRAM_BOT_TOKEN}
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVICE_URI}
+  instance:
+    prefer-ip-address: true

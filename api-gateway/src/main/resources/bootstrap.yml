@@ -1,3 +1,5 @@
+server:
+  port: ${SERVER_PORT:8090}
 spring:
   application:
     name: api-gateway
@@ -6,4 +8,4 @@ spring:
     allow-bean-definition-overriding: true
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: ${CONFIG_SERVICE_URI}

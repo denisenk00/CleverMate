@@ -1,1 +1,14 @@
-
+openai:
+  key: ${OPENAI_KEY}
+spring:
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    port: ${RABBIT_PORT}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVICE_URI}
+  instance:
+    prefer-ip-address: true

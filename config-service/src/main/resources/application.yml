@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: ${SERVER_PORT:8888}
 spring:
   profiles:
     active: native
@@ -7,5 +7,5 @@ spring:
     config:
       server:
         native:
-          search-locations: file:\Learning\Others\TelegramOpenAPIProject_Microservices\config-service\src\main\resources\config
+          search-locations: file:/config
 

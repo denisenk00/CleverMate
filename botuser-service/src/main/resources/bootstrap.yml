@@ -3,6 +3,6 @@ spring:
     name: botuser-service
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: ${CONFIG_SERVICE_URI}
 server:
-  port: 8082
+  port: ${SERVER_PORT:8082}

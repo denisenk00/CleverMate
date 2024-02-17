@@ -1,5 +1,21 @@
 spring:
   application:
     name: botuser-service
-server:
-  port: 8082
+  data:
+    mongodb:
+      host: ${DB_HOST}
+      port: ${DB_PORT}
+      database: botuser-db
+      username: ${DB_USER}
+      password: ${DB_PASSWORD}
+      authentication-database: admin
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVICE_URI}
+  instance:
+    prefer-ip-address: true
+auth0:
+  issuer: ${AUTH0_ISSUER}
+  audience: ${AUTH0_AUDIENCE}
+  issuer-signing-key: ${AUTH0_SIGNING_KEY}

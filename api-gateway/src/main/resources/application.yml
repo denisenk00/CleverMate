@@ -1,0 +1,16 @@
+auth0:
+  application:
+    domain: ${AUTH0_APP_DOMAIN}
+    client-id: ${AUTH0_CLIENT_ID}
+    client-secret: ${AUTH0_CLIENT_SECRET}
+  client-api:
+    audience: ${AUTH0_AUDIENCE}
+    issuer-signing-key: ${AUTH0_SIGNING_KEY}
+  users:
+    admin-role-id: ${AUTH0_ADMIN_ROLE_ID}
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVICE_URI}
+  instance:
+    prefer-ip-address: true

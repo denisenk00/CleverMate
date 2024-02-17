@@ -1,1 +1,24 @@
-
+spring:
+  data:
+    mongodb:
+      host: ${DB_HOST}
+      port: ${DB_PORT}
+      database: message-db
+      username: ${DB_USER}
+      password: ${DB_PASSWORD}
+      authentication-database: admin
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    port: ${RABBIT_PORT}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVICE_URI}
+  instance:
+    prefer-ip-address: true
+auth0:
+  issuer: ${AUTH0_ISSUER}
+  audience: ${AUTH0_AUDIENCE}
+  issuer-signing-key: ${AUTH0_SIGNING_KEY}

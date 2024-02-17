@@ -1,26 +1,8 @@
-server:
-  port: 8081
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
 spring:
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: 
-    password:
   cloud:
     openfeign:
       circuitbreaker:
         enabled: true
-
-telegram:
-  bot:
-    username: Denysenko_telegram_openai_bot
-    token:
 resilience4j:
   circuitbreaker:
     instances:
