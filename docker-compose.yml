@@ -2,6 +2,9 @@ version: '3.8'
 services:
   config-service:
     image: config-service
+    build:
+      context: config-service
+      dockerfile: Dockerfile
     container_name: config-service
     ports:
     - 8888:8888
@@ -17,6 +20,9 @@ services:
       start_period: 10s
   discovery-service:
     image: discovery-service
+    build:
+      context: discovery-service
+      dockerfile: Dockerfile
     container_name: discovery-service
     ports:
     - 8761:8761
@@ -29,6 +35,9 @@ services:
 
   api-gateway:
     image: api-gateway
+    build:
+      context: api-gateway
+      dockerfile: Dockerfile
     container_name: api-gateway
     ports:
     - 8090:8090
@@ -50,6 +59,9 @@ services:
 
   telegram-service:
     image: telegram-service
+    build:
+      context: telegram-service
+      dockerfile: Dockerfile
     container_name: telegram-service
     ports:
     - 8081:8081
@@ -72,6 +84,9 @@ services:
 
   message-processor:
     image:  message-processor
+    build:
+      context: message-processor
+      dockerfile: Dockerfile
     container_name:  message-processor
     ports:
     - 8084:8084
@@ -93,6 +108,9 @@ services:
 
   message-service:
     image: message-service
+    build:
+      context: message-service
+      dockerfile: Dockerfile
     container_name: message-service
     ports:
     - 8083:8083
@@ -141,6 +159,9 @@ services:
 
   botuser-service:
     image: botuser-service
+    build:
+      context: botuser-service
+      dockerfile: Dockerfile
     container_name: botuser-service
     ports:
     - 8082:8082
