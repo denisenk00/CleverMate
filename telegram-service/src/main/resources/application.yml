@@ -16,3 +16,7 @@ eureka:
       defaultZone: ${DISCOVERY_SERVICE_URI}
   instance:
     prefer-ip-address: true
+management:
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_URI}/api/v2/spans

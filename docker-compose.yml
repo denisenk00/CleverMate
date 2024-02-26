@@ -14,10 +14,10 @@ services:
       - ./config-service/src/main/resources/config:/config
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost:8888/actuator/health || exit 1
-      interval: 2s
-      timeout: 3s
+      interval: 10s
+      timeout: 10s
       retries: 5
-      start_period: 10s
+      start_period: 15s
   discovery-service:
     image: discovery-service
     build:
@@ -28,10 +28,10 @@ services:
     - 8761:8761
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost:8761/actuator/health || exit 1
-      interval: 5s
+      interval: 10s
       timeout: 10s
       retries: 5
-      start_period: 10s
+      start_period: 15s
 
   api-gateway:
     image: api-gateway
@@ -51,6 +51,7 @@ services:
       - AUTH0_ADMIN_ROLE_ID=${AUTH0_ADMIN_ROLE_ID}
       - CONFIG_SERVICE_URI=${CONFIG_SERVICE_URI}
       - DISCOVERY_SERVICE_URI=${DISCOVERY_SERVICE_URI}
+      - ZIPKIN_URI=${ZIPKIN_URI}
     depends_on:
       config-service:
         condition: service_healthy
@@ -74,6 +75,7 @@ services:
       - RABBIT_PASSWORD=${RABBIT_PASSWORD}
       - CONFIG_SERVICE_URI=${CONFIG_SERVICE_URI}
       - DISCOVERY_SERVICE_URI=${DISCOVERY_SERVICE_URI}
+      - ZIPKIN_URI=${ZIPKIN_URI}
     depends_on:
       config-service:
         condition: service_healthy
@@ -98,6 +100,7 @@ services:
       - OPENAI_KEY=${OPENAI_KEY}
       - CONFIG_SERVICE_URI=${CONFIG_SERVICE_URI}
       - DISCOVERY_SERVICE_URI=${DISCOVERY_SERVICE_URI}
+      - ZIPKIN_URI=${ZIPKIN_URI}
     depends_on:
       config-service:
         condition: service_healthy
@@ -128,6 +131,7 @@ services:
       - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
       - CONFIG_SERVICE_URI=${CONFIG_SERVICE_URI}
       - DISCOVERY_SERVICE_URI=${DISCOVERY_SERVICE_URI}
+      - ZIPKIN_URI=${ZIPKIN_URI}
     depends_on:
       config-service:
         condition: service_healthy
@@ -175,6 +179,7 @@ services:
       - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
       - CONFIG_SERVICE_URI=${CONFIG_SERVICE_URI}
       - DISCOVERY_SERVICE_URI=${DISCOVERY_SERVICE_URI}
+      - ZIPKIN_URI=${ZIPKIN_URI}
     depends_on:
       config-service:
         condition: service_healthy
@@ -217,5 +222,10 @@ services:
       interval: 5s
       timeout: 30s
       retries: 3
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+    - 9411:9411
 
 

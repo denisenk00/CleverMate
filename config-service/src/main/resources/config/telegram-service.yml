@@ -27,3 +27,11 @@ resilience4j:
       botuser-service:
         max-concurrent-calls: 3
         max-wait-duration: 1s
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  tracing:
+    sampling:
+      probability: 1.0

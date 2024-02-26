@@ -43,6 +43,7 @@ public class RabbitConfig {
     public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory){
         var rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        rabbitTemplate.setObservationEnabled(true);
         return rabbitTemplate;
     }
 

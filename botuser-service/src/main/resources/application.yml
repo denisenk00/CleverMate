@@ -19,3 +19,7 @@ auth0:
   issuer: ${AUTH0_ISSUER}
   audience: ${AUTH0_AUDIENCE}
   issuer-signing-key: ${AUTH0_SIGNING_KEY}
+management:
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_URI}/api/v2/spans
